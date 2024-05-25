@@ -9,14 +9,21 @@
         if (message) {
             vscode.postMessage({ command: 'sendMessage', text: message });
             chatInput.value = '';
+            chatInput.style.height = 'auto'; // Reset height after sending
             addMessageToLog('User', message);
         }
     });
 
     chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault(); // Prevent newline on Enter without Shift
             sendButton.click();
         }
+    });
+
+    chatInput.addEventListener('input', () => {
+        chatInput.style.height = 'auto'; // Reset height to auto to recalculate
+        chatInput.style.height = (chatInput.scrollHeight) + 'px'; // Adjust height to content
     });
 
     window.addEventListener('message', event => {

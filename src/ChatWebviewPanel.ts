@@ -119,9 +119,9 @@ export class ChatWebviewPanel {
   private _getHtmlForWebview(webview: vscode.Webview) {
     const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'main.js'));
     const styleUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'main.css'));
-
+  
     const messagesHtml = this.messages.map(msg => `<p>${msg}</p>`).join('');
-
+  
     return `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -134,13 +134,13 @@ export class ChatWebviewPanel {
         <div id="chat-container">
             <div id="chat-log">${messagesHtml}</div>
             <div id="input-container">
-                <input id="chat-input" type="text" placeholder="Type your message here">
+                <textarea id="chat-input" placeholder="Type your message here"></textarea>
                 <button id="send-button">Send</button>
             </div>
         </div>
         <script src="${scriptUri}"></script>
     </body>
-    </html>
-    `;
+    </html>`;
   }
+  
 }
